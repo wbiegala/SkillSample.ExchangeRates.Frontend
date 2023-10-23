@@ -1,7 +1,16 @@
 <div class="box">
-  <h1>Kursy walut</h1>
-  <span><b>Data odczytu: </b>{{ (effectiveDate$ | async) | date : 'YYYY-MM-dd' }}</span>
-  <span><b>Numer tabeli: </b> {{ tableNumber$ | async }}</span>
+  <span>
+    <h1>Kursy walut</h1>
+  </span>
+
+  <span>
+    <b>Data odczytu: </b>{{ (effectiveDate$ | async) | date : 'YYYY-MM-dd' }}
+  </span>
+
+  <span>
+    <b>Numer tabeli: </b> {{ tableNumber$ | async }}
+  </span>
+
   <div class="table-view">
     <table mat-table [dataSource]="rates$ | async" class="mat-elevation-z8">
 
@@ -22,6 +31,12 @@
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">
+          <h3>Brak danych</h3>
+        </td>
+      </tr>
     </table>
 
   </div>

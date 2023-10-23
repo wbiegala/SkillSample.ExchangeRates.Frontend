@@ -3,7 +3,7 @@ import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { ProgressIndicatorService } from 'src/app/shared/core/progress-indicator.service';
 import { CurrencyEntryDto, GetExchangeRatesResponseDto } from 'src/app/shared/currency-rates/currency-rates.model';
 import { CurrencyRatesService } from 'src/app/shared/currency-rates/currency-rates.service';
-import { InitializeCurrencyRates, InitializeCurrencyRatesFail, InitializeCurrencyRatesSuccess } from './currency-rates.actions';
+import { InitializeCurrencyRates, InitializeCurrencyRatesSuccess } from './currency-rates.actions';
 import { tap } from 'rxjs';
 
 export const defaultState: GetExchangeRatesResponseDto = {
@@ -33,14 +33,15 @@ export class CurrencyRatesState {
     return state.currencyRates;
   }
 
-  constructor(private currencyRates: CurrencyRatesService, private progress: ProgressIndicatorService) { }
+  constructor(
+    private currencyRates: CurrencyRatesService,
+    private progress: ProgressIndicatorService) { }
 
   @Action(InitializeCurrencyRates)
   initializeCurrencyRates(ctx: StateContext<GetExchangeRatesResponseDto>) {
     return this.progress.runWithProgressBar(this.currencyRates.getExchangeRates().pipe(
       tap({
         next: apiData => ctx.dispatch(new InitializeCurrencyRatesSuccess(apiData)),
-        error: err => ctx.dispatch(new InitializeCurrencyRatesFail(err)),
       }),
     ));
   }
@@ -48,10 +49,5 @@ export class CurrencyRatesState {
   @Action(InitializeCurrencyRatesSuccess)
   initializeCurrencyRatesSuccess(ctx: StateContext<GetExchangeRatesResponseDto>, { data }: InitializeCurrencyRatesSuccess) {
     ctx.setState(data);
-  }
-
-  @Action(InitializeCurrencyRatesFail)
-  initializeCurrencyRatesFail(ctx: StateContext<GetExchangeRatesResponseDto>, {error}: InitializeCurrencyRatesFail) {
-
   }
 }

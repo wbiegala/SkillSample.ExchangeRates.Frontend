@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { InitializeCurrencyRates } from '../../store/currency-rates.actions';
 import { Observable } from 'rxjs';

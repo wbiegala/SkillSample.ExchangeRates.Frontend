@@ -9,7 +9,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppCoreModule } from './core/app-core.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CurrenycRatesModule } from './currency-rates/currency-rates.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { ConnectionErrorInterceptor } from './core/interceptors/connection-error-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,11 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: ConnectionErrorInterceptor,
+    multi: true,
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
