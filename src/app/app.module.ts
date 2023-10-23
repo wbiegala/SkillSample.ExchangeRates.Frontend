@@ -8,6 +8,8 @@ import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppCoreModule } from './core/app-core.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CurrenycRatesModule } from './currency-rates/currency-rates.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MaterialLoaderModule,
     AppRoutingModule,
     AppCoreModule,
-    BrowserAnimationsModule
+    CurrenycRatesModule,
+    BrowserAnimationsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
